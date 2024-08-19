@@ -66,18 +66,17 @@ Only generate 10 flashcards.`;
 
 // Function to format the raw response into flashcards
 function formatResponseToFlashcards(response) {
-  const flashcards = [];
-  const sections = response.split('\n\n'); // Split by double newlines to separate flashcards
+    // Parse the response and create flashcards
+    const flashcards = [];
+    
+    const sections = response.split('\n\n'); // Assuming each flashcard is separated by double newlines
+    sections.forEach(section => {
+        const [front, back] = section.split('\n'); // Assuming the first line is the front and the second line is the back
+        if (front && back) {
+            // Remove "Front: " and "Back: " labels
+            flashcards.push({ front: front.replace(/^\*\s\*\*Front:\*\*\s*/, '').trim(), back: back.replace(/^\*\s\*\*Back:\*\*\s*/, '').trim() });
+        }
+    });
 
-  sections.forEach(section => {
-      const lines = section.split('\n'); // Split each section into lines
-      if (lines.length >= 2) {
-          // Remove "* **Front:** " and "* **Back:** " labels and trim the content
-          const front = lines[0].replace(/^\*\s\*\*Front:\*\*\s*/, '').trim();
-          const back = lines[1].replace(/^\*\s\*\*Back:\*\*\s*/, '').trim();
-          flashcards.push({ front, back });
-      }
-  });
-
-  return flashcards;
+    return flashcards;
 }
