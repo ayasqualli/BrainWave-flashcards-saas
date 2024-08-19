@@ -163,6 +163,7 @@ export default function Flashcards() {
 
   const handleGenerateFlashcards = async () => {
     if (!prompt) return;
+    console.log("Prompt value before API call:", prompt);
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: {
