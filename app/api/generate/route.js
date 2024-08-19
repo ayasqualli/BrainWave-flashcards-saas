@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { db } from "/app/firebase-config";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -35,7 +36,7 @@ export async function POST(req) {
 
     let flashcards;
     try {
-      flashcards = JSON.parse(response).flashcards; // Access the flashcards property
+      flashcards = JSON.parse(response).flashcards;
     } catch (jsonError) {
       console.error("Error parsing JSON response:", jsonError);
       return new NextResponse("Error parsing response from API", {
@@ -43,24 +44,28 @@ export async function POST(req) {
       });
     }
 
-    if (!Array.isArray(flashcards)) {
-      console.error("Unexpected response format:", flashcards);
+    if (!Array.isArray(flashcards) || flashcards.length !== 10) {
+      console.error("Unexpected response format or number of flashcards.");
       return new NextResponse("Unexpected response format from API", {
         status: 500,
       });
     }
 
-    // Ensure there are exactly 10 flashcards
-    if (flashcards.length !== 10) {
-      console.error("Unexpected number of flashcards:", flashcards.length);
-      return new NextResponse("API did not generate exactly 10 flashcards", {
-        status: 500,
+    // Save each flashcard to Firestore
+    const batch = db.batch();
+    flashcards.forEach(async (flashcard) => {
+      const flashcardRef = collection(db, "flashcards");
+      batch.set(flashcardRef, {
+        front: flashcard.front,
+        back: flashcard.back,
+        createdAt: new Date(),
       });
-    }
+    });
 
+    await batch.commit();
     return NextResponse.json({ flashcards });
   } catch (error) {
-    console.error("Error generating flashcards:", error);
+    console.error("Error generating or saving flashcards:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
