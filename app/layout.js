@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -9,9 +9,37 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const clerkAppearance = {
+    layout: {
+      socialButtonsVariant: "iconButton",
+      socialButtonsPlacement: "bottom",
+    },
+    elements: {
+      formButtonPrimary: {
+        fontSize: "16px",
+        fontWeight: "600",
+        textTransform: "none",
+        backgroundColor: "#3f51b5",
+        "&:hover": {
+          backgroundColor: "#303f9f",
+        },
+      },
+      card: {
+        border: "none",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        borderRadius: "8px",
+      },
+      formFieldInput: {
+        borderRadius: "4px",
+      },
+    },
+  };
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider appearance={clerkAppearance}>
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
