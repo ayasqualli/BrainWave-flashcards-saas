@@ -30,7 +30,7 @@ export default function ContactPage() {
                 color: '#ffffff' // Text color
               }}>
                 <h2 className="text-color-invert">Contact Us</h2>
-                <p className="text-size-medium">We'd love to hear from you!</p>
+                <p className="text-size-medium">We&apos;d love to hear from you!</p>
                 <div className="contact_info">
                   <div className="contact_item">
                     <strong>Phone:</strong>
