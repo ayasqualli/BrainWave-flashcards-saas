@@ -1,7 +1,7 @@
 'use client' //Client Component
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useSearchParams} from 'next/navigation';
 import { Container, Typography, Box, CircularProgress} from "@mui/material";
 
@@ -80,3 +80,4 @@ const ResultPage = () => {
       </Container>
       );
 }
+export default ResultPage;
