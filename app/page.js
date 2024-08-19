@@ -302,7 +302,7 @@ export default function HomePage() {
                                 Track Your Progress
                               </h3>
                               <p>
-                                Monitor how much you've learned and what needs more attention.
+                                Monitor how much you have learned and what needs more attention.
                               </p>
                             </div>
                             <div className="button-group">
