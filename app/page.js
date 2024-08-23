@@ -354,7 +354,7 @@ export default function HomePage() {
                     <p className="price">Contact us for pricing</p>
                     <p>Custom solutions for your organization.</p>
                     <div className="button-group">
-                      <button className="button w-button" onClick={() => handleSubmit('enterprise')}>Contact Us</button>
+                      <a href="/contact" className="button w-button">Contact Us</a>
                     </div>
                   </div>
                 </div>
