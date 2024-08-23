@@ -78,5 +78,5 @@ function formatResponseToFlashcards(response) {
         }
     });
 
-    return flashcards;
+      return flashcards;
 }
